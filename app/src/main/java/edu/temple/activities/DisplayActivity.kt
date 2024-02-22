@@ -33,7 +33,7 @@ class DisplayActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode==1){
             if(resultCode== RESULT_OK){
-                val size = data!!.getStringExtra("SIZE")
+                val size = data!!.getIntExtra("SIZE", 22)
                 lyricsDisplayTextView.textSize=size!!.toFloat()
             }
         }
