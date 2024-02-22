@@ -10,7 +10,7 @@ class DisplayActivity : AppCompatActivity() {
 
     // Step 1: Launch TextSizeActivity when button clicked to allow selection of text size value
 
-    // TODO Step 3: Use returned value for lyricsDisplayTextView text size
+    // Step 3: Use returned value for lyricsDisplayTextView text size
 
     private lateinit var lyricsDisplayTextView: TextView
     private lateinit var textSizeSelectorButton: Button
@@ -27,5 +27,15 @@ class DisplayActivity : AppCompatActivity() {
             startActivityForResult(launchIntent, 1)
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==1){
+            if(resultCode== RESULT_OK){
+                val size = data!!.getStringExtra("SIZE")
+                lyricsDisplayTextView.textSize=size!!.toFloat()
+            }
+        }
     }
 }
