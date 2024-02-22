@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 class DisplayActivity : AppCompatActivity() {
 
@@ -24,12 +25,23 @@ class DisplayActivity : AppCompatActivity() {
 
         textSizeSelectorButton.setOnClickListener{
             val launchIntent = Intent(this@DisplayActivity, TextSizeActivity::class.java)
-            startActivityForResult(launchIntent, 1)
+            //startActivityForResult(launchIntent, 1) //deprecated
+            launcher.launch(launchIntent)
         }
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode== RESULT_OK){
+            it.data?.apply {
+                val size = getIntExtra("SIZE", 22)
+                lyricsDisplayTextView.textSize = size.toFloat()
+            }
+        }
+    }
+
+    //deprecated
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode==1){
             if(resultCode== RESULT_OK){
@@ -37,5 +49,5 @@ class DisplayActivity : AppCompatActivity() {
                 lyricsDisplayTextView.textSize=size!!.toFloat()
             }
         }
-    }
+    }*/
 }
